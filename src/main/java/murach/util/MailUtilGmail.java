@@ -20,7 +20,7 @@ public class MailUtilGmail {
 
         // Hãy nhớ thay thế bằng API Key thật của bạn
         final String username = "apikey";
-        final String password = "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"; 
+        final String password = "SENDGRID_API_KEY"; 
 
         Session session = Session.getInstance(props, new Authenticator() {
             @Override
