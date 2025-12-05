@@ -7,7 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.mail.MessagingException;
 import murach.business.User;
 import murach.data.UserDB;
-import murach.util.MailUtilGmail;
+import murach.util.MailUtilResend;
 
 @WebServlet("/emailList")
 public class EmailListServlet extends HttpServlet {
@@ -39,10 +39,11 @@ public class EmailListServlet extends HttpServlet {
                           "Thanks for joining our email list.\n" +
                           "Have a great day!";
             try {
-                MailUtilGmail.sendMail(to, from, subject, body, false);
-            } catch (MessagingException e) {
-                this.log("Unable to send email: " + e.getMessage());
-            }
+                    MailUtilResend.send(to, subject, body);
+                } catch (Exception e) {
+                    this.log("Unable to send email: " + e.getMessage());
+                }
+
             
             request.setAttribute("user", user);
             url = "/thanks.jsp";

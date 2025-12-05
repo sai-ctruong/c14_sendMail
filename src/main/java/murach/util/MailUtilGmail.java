@@ -5,22 +5,20 @@ import jakarta.mail.*;
 import jakarta.mail.internet.*;
 
 public class MailUtilGmail {
-
-    public static void sendMail(String to, String from,
-            String subject, String body, boolean bodyIsHTML)
+    public static void sendMail(String to, String from, String subject, String body, boolean bodyIsHTML)
             throws MessagingException {
-
+        
         Properties props = new Properties();
-        // Cấu hình SMTP của SendGrid
         props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.host", "smtp.sendgrid.net");
+        props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 
-        // Hãy nhớ thay thế bằng API Key thật của bạn
-        final String username = "apikey";
-        final String password = "SENDGRID_API_KEY"; 
+        // --- THAY THÔNG TIN CỦA BẠN Ở ĐÂY ---
+        final String username = "congtruong19802005@gmail.com";
+        final String password = "tcxo gmtr hjhy pgko"; 
+        // -------------------------------------
 
         Session session = Session.getInstance(props, new Authenticator() {
             @Override
@@ -30,16 +28,12 @@ public class MailUtilGmail {
         });
 
         Message message = new MimeMessage(session);
-        message.setSubject(subject);
-        if (bodyIsHTML) {
-            message.setContent(body, "text/html; charset=utf-8");
-        } else {
-            message.setText(body);
-        }
-
-        
-        message.setFrom(new InternetAddress("congtruong19802005@gmail.com"));
+        message.setFrom(new InternetAddress(username));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+        message.setSubject(subject);
+        
+        if (bodyIsHTML) message.setContent(body, "text/html; charset=utf-8");
+        else message.setText(body);
 
         Transport.send(message);
     }
